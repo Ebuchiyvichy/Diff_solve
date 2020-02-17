@@ -1,7 +1,7 @@
 //
 // Created by irina on 12.02.2020.
 //
-#include "equation.h"
+#include "MatrixClass.h"
 
 int main()
 {
@@ -14,6 +14,7 @@ int main()
     // инициализация начальных краевых условий и временного интервала
     test_init(TEST, &u0, &T, func);
     int n = (T-t0)/h; // количество разбиений сетки
+
 
 
     return 0;

@@ -7,37 +7,37 @@
 
 #endif //DIFF_SOLVE_EQUATION_H
 
-#include <iomanip>
-#include <iostream>
-#include <vector>
 #include "function.h"
 
-void test_init(int TEST, std::vector<double>* u0, double *T, double (*func)())
+void test_init(int TEST, std::vector<double>* u0, double *T, std::vector<double> (*func)(std::vector<double>))
 {
-    switch TEST:
-    case 0:{
-        u0[0] = 1;
-        u0[1] = 0;
-        func = spring;
-        break();
+    switch (TEST) {
+        case 0:
+            u0[0][0] = 1.;
+            u0[1][0] = 0.;
+            func = spring;
+            break;
+
+        case 1:
+            u0[0][0] = 2.;
+            u0[1][0] = 0.;
+            func = test1;
+            break;
+
+        case 2:
+            u0[0][0] = 1;
+            u0[1][0] = 0;
+            func = test2;
+            break;
+
+        case 3: {
+        }
+        default:
+            break;
     }
-    case 1:{
-        u0[0] = 2;
-        u0[1] = 0;
-        func = test1;
-        break();
-    };
-    case 2:{
-        u0[0] = 1;
-        u0[1] = 0;
-        func = test2;
-        break();
-    }
-    case 3: {}
-    default: break();
 }
 
-void eiler_explicit(std::vector<double> u0, double T, int h, double (*func)())
+void eiler_explicit(std::vector<double> u0, double T, double h, std::vector<double> (*func)(std::vector<double>))
 {
     std::ofstream fout;
     fout.open("Explicit_eiler.txt");
@@ -48,13 +48,12 @@ void eiler_explicit(std::vector<double> u0, double T, int h, double (*func)())
     }
     fout.close();
 }
-void eiler_implicit(std::vector<double> y0, double T, int h, double (*func)())
+void eiler_implicit(std::vector<double> y0, double T, int h, double (*func)(std::vector<double>))
 {
     std::vector<double> y(y0);
-    std::ofsream fout;
+    std::ofstream fout;
     fout.open("Implicit_eiler.txt");
 
-    foutr.close();
-
+    fout.close();
 
 }
