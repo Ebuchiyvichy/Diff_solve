@@ -12,8 +12,30 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <functional>
 double			EPS = 10.e-6;
 int	const		dim = 2;
+double const    t0 = 0;
+std::function<std::vector<double>(std::vector<double>)> func; // указатель на функцию для конкретного теста
+
+std::vector<double>	cpy_vector(std::vector<double> tmp, std::vector<double> x, int size)
+{
+
+    for (int i = 0; i < size; i++)
+        tmp[i] = x[i];
+    return (tmp);
+}
+
+
+double	norm(std::vector<double> a, std::vector<double> b)
+{
+    double	max;
+    max = fabs(a[0] - b[0]);
+    for (int i = 1; i < dim; i++)
+        if (fabs(a[i] - b[i]) > max)
+            max = fabs(a[i] - b[i]);
+    return max;
+}
 
 class Matrix
 {
@@ -145,6 +167,19 @@ public:
             for (int i = 0; i != A.size; i++)
                 for (int j = 0; j != A.size; j++) {
                     c[i] += A.value[i][j] * b[j];
+                }
+        }
+        return c;
+    }
+
+    friend std::vector<double> operator * ( const std::vector<double> &b, const Matrix &A){
+        std::vector<double> c(b.size());
+        if (A.size != b.size())
+            std::cout << "Wrong size in vector or matrix!\n";
+        else {
+            for (int i = 0; i != A.size; i++)
+                for (int j = 0; j != A.size; j++) {
+                    c[i] += A.value[j][i] * b[j];
                 }
         }
         return c;

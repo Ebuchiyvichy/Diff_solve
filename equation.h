@@ -9,18 +9,19 @@
 
 #include "function.h"
 
-void test_init(int TEST, std::vector<double>* u0, double *T, std::vector<double> (*func)(std::vector<double>))
+void test_init(int TEST, std::vector<double>* u0, double *T)
 {
     switch (TEST) {
         case 0:
             u0[0][0] = 1.;
-            u0[1][0] = 0.;
-            func = spring;
+            u0[0][1] = 0.;
+            func = &spring;
+            *T = 0.5;
             break;
 
         case 1:
             u0[0][0] = 2.;
-            u0[1][0] = 0.;
+            u0[0][1] = 0.;
             func = test1;
             break;
 
@@ -30,30 +31,29 @@ void test_init(int TEST, std::vector<double>* u0, double *T, std::vector<double>
             func = test2;
             break;
 
-        case 3: {
-        }
+        case 3: break;
         default:
             break;
     }
 }
 
-void eiler_explicit(std::vector<double> u0, double T, double h, std::vector<double> (*func)(std::vector<double>))
+void eiler_explicit(std::vector<double> u0, double T, double h)
 {
     std::ofstream fout;
     fout.open("Explicit_eiler.txt");
-    for (int i = 0; i <= T; i += i+h )
+    for (double i = 0; i <= T; i = i + h  )
     {
         fout << i << '\t' << u0[0] <<'\t' << u0[1]<< std::endl;
-        u0 = u0 + h * func(u0);
+        u0 = u0 + h * (func(u0));
     }
     fout.close();
 }
-void eiler_implicit(std::vector<double> y0, double T, int h, double (*func)(std::vector<double>))
+void eiler_implicit(std::vector<double> u0, double T, int h)
 {
-    std::vector<double> y(y0);
-    std::ofstream fout;
-    fout.open("Implicit_eiler.txt");
-
-    fout.close();
-
+    std::vector<double> yk(u0);
+    for (double i = 0; i <= T; i = i + h  )
+    {
+        yk = u0 + h * (func(u0));
+        Newton(u0);
+    }
 }
