@@ -7,11 +7,11 @@
 
 #endif //DIFF_SOLVE_FUNCTION_H
 
-#include "newton.h"
-std::vector<double> f_new(std::vector<double> yn_1, std::vector<double> yn, double h)
+#include "MatrixClass.h"
+std::vector<double> f_new(std::vector<double> yn_1, std::vector<double> u0, double h)
 {
     std::vector<double> y(dim);
-    y = yn_1 - yn - h * func(yn_1) ;
+    y = yn_1 - u0 - h * func(yn_1) ;
     return y;
 }
 

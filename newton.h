@@ -6,7 +6,8 @@
 #define DIFF_SOLVE_NEWTON_H
 
 #endif //DIFF_SOLVE_NEWTON_H
-#include "MatrixClass.h"
+#include "function.h"
+
 double	D (std::vector<double> x, int n, int m)
 {
     std::vector<double>	tmp(x);
@@ -35,7 +36,7 @@ Matrix	Jacoby_matr(std::vector<double> x)
     return Jac;
 }
 
-void Newton(std::vector<double> x)
+void Newton(std::vector<double> x, std::vector<double> u0, int h)
 {
     std::vector<double>	xk(x);
     Matrix	J_(dim);
@@ -52,7 +53,7 @@ void Newton(std::vector<double> x)
         T.onebyone();
         T.QR_find_x(R);
         J_.inverse_matrix(R, T);
-        x = xk - func(xk) * J_;
+        x = xk - f_new(xk, u0, h) * J_;
     } while (norm(xk, x) > EPS);
     std::cout << x[0] << '\t';
     fout << x[0] << '\t' << x[1] << std::endl;

@@ -26,7 +26,6 @@ std::vector<double>	cpy_vector(std::vector<double> tmp, std::vector<double> x, i
     return (tmp);
 }
 
-
 double	norm(std::vector<double> a, std::vector<double> b)
 {
     double	max;
@@ -171,7 +170,6 @@ public:
         }
         return c;
     }
-
     friend std::vector<double> operator * ( const std::vector<double> &b, const Matrix &A){
         std::vector<double> c(b.size());
         if (A.size != b.size())
@@ -259,7 +257,6 @@ public:
         x = cpy_vector(x, b_, A.size);
         return (x);
     }
-
     friend std::vector<double>	multi_vect(std::vector<double> I, const Matrix& T)
     {
         std::vector<double> tmp(dim);
