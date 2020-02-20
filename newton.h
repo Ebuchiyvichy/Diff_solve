@@ -10,6 +10,7 @@
 double	D (std::vector<double> x, int n, int m)
 {
     std::vector<double>	tmp(x);
+    std::vector<double> tmp1(dim);
 
     tmp[m] = x[m] + EPS;
     return (func(tmp)[n] - func(x)[n]) / EPS;

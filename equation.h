@@ -48,7 +48,7 @@ void eiler_explicit(std::vector<double> u0, double T, double h)
     }
     fout.close();
 }
-void eiler_implicit(std::vector<double> u0, double T, int h)
+void eiler_implicit(std::vector<double> u0, double T, double h)
 {
     std::vector<double> yk(u0);
     for (double i = 0; i <= T; i = i + h  )
@@ -56,4 +56,9 @@ void eiler_implicit(std::vector<double> u0, double T, int h)
         yk = u0 + h * (func(u0));
         Newton(u0);
     }
+}
+
+void razn_scheme(std::vector<double> u0, double T, double h)
+{
+
 }
