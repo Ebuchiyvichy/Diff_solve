@@ -9,7 +9,7 @@
 
 #include "newton.h"
 
-void test_init(int TEST, std::vector<double>* u0, double *T)
+void	test_init(int TEST, std::vector<double>* u0, double *T)
 {
     switch (TEST) {
         case 0:
@@ -37,7 +37,7 @@ void test_init(int TEST, std::vector<double>* u0, double *T)
     }
 }
 
-void eiler_explicit(std::vector<double> u0, double T, double h)
+void	eiler_explicit(std::vector<double> u0, double T, double h)
 {
     std::ofstream fout;
     fout.open("Explicit_eiler.txt");
@@ -50,9 +50,9 @@ void eiler_explicit(std::vector<double> u0, double T, double h)
 	std::cout << "Explicit Eiler has done." << std::endl;
 }
 
-void eiler_implicit(std::vector<double> u0, double T, double h)
+void	eiler_implicit(std::vector<double> u0, double T, double h)
 {
-    std::vector<double> yk(u0);
+   std::vector<double> yk(u0);
 
    std::ofstream fout;
    fout.open("Implicit_eiler.txt");
@@ -64,4 +64,20 @@ void eiler_implicit(std::vector<double> u0, double T, double h)
     }
    fout.close();
    std::cout << "Implicit Eiler has done." << std::endl;
+}
+
+void	sym_scheme(std::vector<double> u0, double T, double h)
+{
+	std::vector<double> yk(u0);
+
+	std::ofstream fout;
+	fout.open("Sym_scheme.txt");
+	for (double i = 0; i <= T; i = i + h)
+	{
+		fout << i << '\t' << u0[0] << '\t' << u0[1] << std::endl;
+		Newton_sym(&yk, u0, h);
+		u0 = yk;
+	}
+	fout.close();
+	std::cout << "Simmetrical scheme has done." << std::endl;
 }

@@ -14,7 +14,8 @@ int main(void)
     test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
     int n = (T-t0)/h; // количество разбиений сетки
 	eiler_explicit(u0, T, h);
-	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
+//	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
+//	sym_scheme(u0, T, h);
 
 	system("pause");
 
