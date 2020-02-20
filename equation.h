@@ -47,15 +47,21 @@ void eiler_explicit(std::vector<double> u0, double T, double h)
         u0 = u0 + h * (func(u0));
     }
     fout.close();
+	std::cout << "Explicit Eiler has done." << std::endl;
 }
 
-void eiler_implicit(std::vector<double> u0, double T, int h)
+void eiler_implicit(std::vector<double> u0, double T, double h)
 {
     std::vector<double> yk(u0);
+
+   std::ofstream fout;
+   fout.open("Implicit_eiler.txt");
     for (double i = 0; i <= T; i = i + h  )
     {
-    //    yk = u0 + h * (func(u0));
-        Newton(yk, u0, h);
+		fout << i << '\t' << u0[0] << '\t' << u0[1] << std::endl;
+        Newton(&yk, u0, h);
 		u0 = yk;
     }
+   fout.close();
+   std::cout << "Implicit Eiler has done." << std::endl;
 }

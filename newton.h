@@ -36,26 +36,26 @@ Matrix	Jacoby_matr(std::vector<double> x)
     return Jac;
 }
 
-void Newton(std::vector<double> x, std::vector<double> u0, int h)
+void Newton(std::vector<double> *x, std::vector<double> u0, double h)
 {
-    std::vector<double>	xk(x);
+    std::vector<double>	xk(*x);
     Matrix	J_(dim);
     Matrix  J(dim);
     Matrix	R(dim);
     Matrix	T(dim);
-    std::ofstream fout;
-    fout.open("Implicit_eiler.txt");
+
     do
     {
-        xk = x;
+        xk = *x;
         J = Jacoby_matr(xk);
         R = J;
         T.onebyone();
         T.QR_find_x(R);
         J_.inverse_matrix(R, T);
-        x = xk - f_new(xk, u0, h) * J_;
-    } while (norm(xk, x) > EPS);
-    std::cout << x[0] << '\t';
-    fout << x[0] << '\t' << x[1] << std::endl;
-    fout.close();
+        *x = xk - f_new(xk, u0, h) * J_;
+
+//		std::cout << "xk = " << xk[0] << "; " << xk[1] << std::endl;
+//		std::cout << "f_new = " << (f_new(xk, u0, h))[0] << "; " << (f_new(xk, u0, h))[1] << std::endl;
+//		std::cout << "x = " << (*x)[0] << "; " << (*x)[1] << std::endl;	
+	} while (norm(xk, *x) > EPS);
 }

@@ -8,13 +8,13 @@ int main(void)
 	setlocale(LC_ALL, "Russian");
     std::cout << "Введите номер теста: ";
     int TEST; std::cin >>  TEST;
-    double T; double h = 0.1;
+    double T; double h = 0.003;
     std::vector<double> u0(dim);
 	std::vector<double> y(dim);
     test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
     int n = (T-t0)/h; // количество разбиений сетки
-//	eiler_explicit(u0, T, h);
-	eiler_implicit(u0, T, h);
+	eiler_explicit(u0, T, h);
+	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
 
 	system("pause");
 
