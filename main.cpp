@@ -16,6 +16,7 @@ int main(void)
 	eiler_explicit(u0, T, h);
 //	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
 //	sym_scheme(u0, T, h);
+	run_k_2_2(u0, T, h);
 
 	system("pause");
 

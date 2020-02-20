@@ -6,7 +6,7 @@
 #define DIFF_SOLVE_NEWTON_H
 
 #endif //DIFF_SOLVE_NEWTON_H
-#include "function.h"
+#include "Runge_Kut.h"
 
 double	D (std::vector<double> x, int n, int m)
 {
