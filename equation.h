@@ -7,7 +7,7 @@
 
 #endif //DIFF_SOLVE_EQUATION_H
 
-#include "function.h"
+#include "newton.h"
 
 void test_init(int TEST, std::vector<double>* u0, double *T)
 {
@@ -22,17 +22,17 @@ void test_init(int TEST, std::vector<double>* u0, double *T)
         case 1:
             u0[0][0] = 2.;
             u0[0][1] = 0.;
-            func = test1;
+            func = &test1;
             break;
 
         case 2:
             u0[0][0] = 1;
             u0[1][0] = 0;
-            func = test2;
+            func = &test2;
             break;
 
         case 3: break;
-        default:
+		default:
             break;
     }
 }
@@ -48,13 +48,15 @@ void eiler_explicit(std::vector<double> u0, double T, double h)
     }
     fout.close();
 }
+
 void eiler_implicit(std::vector<double> u0, double T, double h)
 {
     std::vector<double> yk(u0);
     for (double i = 0; i <= T; i = i + h  )
     {
-        yk = u0 + h * (func(u0));
-        Newton(u0);
+    //    yk = u0 + h * (func(u0));
+        Newton(yk, u0, h);
+		u0 = yk;
     }
 }
 
