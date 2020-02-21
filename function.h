@@ -15,6 +15,13 @@ std::vector<double> f_new(std::vector<double> yn_1, std::vector<double> u0, doub
     return y;
 }
 
+std::vector<double> f_new_sym(std::vector<double> yn_1, std::vector<double> u0, double h)
+{
+	std::vector<double> y(dim);
+	y = yn_1 - u0 - h / 2 * (func(yn_1) + func(u0));
+	return y;
+}
+
 static std::vector<double> spring(std::vector<double> x)
 {
     std::vector<double> u(2);
