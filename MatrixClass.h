@@ -289,3 +289,10 @@ std::vector<double> operator - (std::vector<double> a, std::vector<double> b)
         c[i] = a[i] - b[i];
     return c;
 }
+std::vector<double> operator / (std::vector<double> a, double b)
+{
+    std::vector<double> c(a);
+    for (int i = 0; i != c.size(); i++)
+        c[i] = a[i] / b;
+    return c;
+}

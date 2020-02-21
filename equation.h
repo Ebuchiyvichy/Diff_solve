@@ -78,3 +78,4 @@ void	sym_scheme(std::vector<double> u0, double T, double h)
 	fout.close();
 	std::cout << "Simmetrical scheme has done." << std::endl;
 }
+
