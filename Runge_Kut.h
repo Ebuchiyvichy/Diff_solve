@@ -76,15 +76,19 @@ void run_k_2_02(std::vector<double> u0, double T, double h, int flag)
 	std::cout << "Runge-Kutte runk 2 order 2 another ones has done." << std::endl;
 }
 
-void run_k_4_4(std::vector<double> u0, double T, double h, int flag)
+void run_k_4_4(std::vector<double> u0, double T, double h, int flag, char nbr)
 {
 	std::vector<double> k_n1(dim);
 	std::vector<double> k_n2(dim);
 	std::vector<double> k_n3(dim);
 	std::vector<double> k_n4(dim);
 	std::ofstream fout;
+	std::string str = "Runge_Kut_4_4_";
 
-	fout.open("Runge_Kut_4_4.txt");
+	str += std::to_string(nbr);
+	str += ".txt";
+	std::cout << str << std::endl;
+	fout.open(str);
 	for (double i = 0; i <= T; i += h)
 	{
 		std::vector<double> tmp(u0);

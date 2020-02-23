@@ -32,7 +32,7 @@ static std::vector<double> spring(std::vector<double> x)
     return u;
 }
 
-static std::vector<double> test1 (std::vector<double> x)
+static std::vector<double> test1(std::vector<double> x)
 {
     std::vector<double> u(dim);
 
@@ -41,7 +41,7 @@ static std::vector<double> test1 (std::vector<double> x)
     return u;
 }
 
-static std::vector<double> test2 (std::vector<double> x)
+static std::vector<double> test2(std::vector<double> x)
 {
     std::vector<double> u(dim);
 

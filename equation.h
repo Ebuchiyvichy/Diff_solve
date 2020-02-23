@@ -12,21 +12,21 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		u0[0][0] = 1.;
 		u0[0][1] = 0.;
 		func = &spring;
-		*T = 0.5;
+		*T = 1;
 		break;
 
 	case 1:
 		u0[0][0] = 2.;
 		u0[0][1] = 0.;
 		func = &test1;
-		*T = 0.5;
+		*T = 1;
 		break;
 
 	case 2:
 		u0[0][0] = 1;
 		u0[0][1] = 0;
 		func = &test2;
-		*T = 0.5;
+		*T = 0.7;
 		break;
 
 	case 3:
@@ -34,7 +34,7 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		u0[0][1] = 0;
 		u0[0][2] = 0;
 		func = &test3;
-		*T = 0.5;
+		*T = 35;
 		break;
 	case 4: break;
 	default:

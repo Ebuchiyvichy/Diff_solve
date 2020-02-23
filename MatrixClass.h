@@ -13,10 +13,12 @@
 #include <iomanip>
 #include <fstream>
 #include <functional>
+#include <string>
 double			EPS = 10.e-6;
 int	const		dim = 3;
 double const    t0 = 0;
 bool			CHECK_ERR = 0;
+double const	M_PI = 3.14159265358979;
 std::function<std::vector<double>(std::vector<double>)> func; // указатель на функцию для конкретного теста
 
 std::vector<double>	cpy_vector(std::vector<double> tmp, std::vector<double> x, int size)

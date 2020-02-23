@@ -1,7 +1,7 @@
 #pragma once
 #include "Runge_Kut.h"
 
-void run_k_4_4_for_one(std::vector<double> *u0, double T, double h)
+void	run_k_4_4_for_one(std::vector<double> *u0, double T, double h)
 {
 	std::vector<double> k_n1(dim);
 	std::vector<double> k_n2(dim);
