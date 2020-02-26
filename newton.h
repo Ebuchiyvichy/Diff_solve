@@ -2,7 +2,7 @@
 #define DIFF_SOLVE_NEWTON_H
 
 #endif //DIFF_SOLVE_NEWTON_H
-#include "Runge_Kut.h"
+#include "Adams.h"
 
 double	D (std::vector<double> x, int n, int m)
 {

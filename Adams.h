@@ -1,7 +1,7 @@
 #pragma once
 #include "Runge_Kut.h"
 
-void run_k_4_4_for_one(std::vector<double> *u0, double T, double h)
+void	run_k_4_4_for_one(std::vector<double> *u0, double T, double h)
 {
 	std::vector<double> k_n1(dim);
 	std::vector<double> k_n2(dim);
@@ -28,18 +28,33 @@ void	Adams(std::vector<double> u0, double T, double h)
 
 	fout.open("Adams.txt");
 	y_n3 = u0;
-	fout << 0 << '\t' << y_n3[0] << '\t' << y_n3[1] << std::endl;
+	fout << 0 << '\t';
+	for (int j = 0; j < dim; j++)
+		fout << y_n3[j] << '\t';
+	fout << std::endl;
 	run_k_4_4_for_one(&y_n3, T, h);
-	fout << h << '\t' << y_n3[0] << '\t' << y_n3[1] << std::endl;
+	fout << h << '\t';
+	for (int j = 0; j < dim; j++)
+		fout << y_n3[j] << '\t';
+	fout << std::endl;
 	y_n2 = y_n3;
 	run_k_4_4_for_one(&y_n2, T, h);
-	fout << 2 * h << '\t' << y_n2[0] << '\t' << y_n2[1] << std::endl;
+	fout << 2 * h << '\t';
+	for (int j = 0; j < dim; j++)
+		fout << y_n3[j] << '\t';
+	fout << std::endl;
 	y_n1 = y_n2;
 	run_k_4_4_for_one(&y_n1, T, h);
-	fout << 3 * h << '\t' << y_n1[0] << '\t' << y_n1[1] << std::endl;
+	fout << 3 * h << '\t';
+	for (int j = 0; j < dim; j++)
+		fout << y_n3[j] << '\t';
+	fout << std::endl;
 	y_n = y_n1;
 	run_k_4_4_for_one(&y_n, T, h);
-	fout << 4 * h << '\t' << y_n[0] << '\t' << y_n[1] << std::endl;
+	fout << 4 * h << '\t';
+	for (int j = 0; j < dim; j++)
+		fout << y_n3[j] << '\t';
+	fout << std::endl;
 
 	for (double i = 5 * h; i <= T; i += h)
 	{
@@ -49,7 +64,10 @@ void	Adams(std::vector<double> u0, double T, double h)
 		y_n2 = y_n1;
 		y_n1 = y_n;
 		y_n = correct;
-		fout << i << '\t' << y_n[0] << '\t' << y_n[1] << std::endl;
+		fout << i << '\t';
+		for (int j = 0; j < dim; j++)
+			fout << y_n[j] << '\t';
+		fout << std::endl;
 	}
 	fout.close();
 	std::cout << "Adams has done." << std::endl;
