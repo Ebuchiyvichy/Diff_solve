@@ -1,7 +1,7 @@
 //
 // Created by irina on 12.02.2020.
 //
-#include "equation.h"
+#include "error.h"
 
 int main(void)
 {
