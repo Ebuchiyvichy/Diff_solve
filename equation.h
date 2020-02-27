@@ -47,7 +47,7 @@ double	check_func(double x)
 	return cos(x * sqrt(20 / 0.03));
 }
 
-void	eiler_explicit(std::vector<double> u0, double T, double h)
+std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h)
 {
 	std::ofstream fout;
 	fout.open("Explicit_eiler.txt");
@@ -67,10 +67,10 @@ void	eiler_explicit(std::vector<double> u0, double T, double h)
 	}
 	fout.close();
 	std::cout << "Explicit Eiler has done." << std::endl;
-	
+    return u0;
 }
 
-void	eiler_implicit(std::vector<double> u0, double T, double h)
+std::vector<double>	eiler_implicit(std::vector<double> u0, double T, double h)
 {
 	std::vector<double> yk(u0);
 
@@ -87,9 +87,10 @@ void	eiler_implicit(std::vector<double> u0, double T, double h)
 	}
 	fout.close();
 	std::cout << "Implicit Eiler has done." << std::endl;
+    return u0;
 }
 
-void	sym_scheme(std::vector<double> u0, double T, double h)
+std::vector<double>	sym_scheme(std::vector<double> u0, double T, double h)
 {
 	std::vector<double> yk(u0);
 
@@ -105,5 +106,6 @@ void	sym_scheme(std::vector<double> u0, double T, double h)
 		u0 = yk;
 	}
 	fout.close();
-	std::cout << "Simmetrical scheme has done." << std::endl;
+	std::cout << "Symmetrical scheme has done." << std::endl;
+    return u0;
 }

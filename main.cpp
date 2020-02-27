@@ -23,7 +23,7 @@ int main(void)
 //	run_k_2_2(u0, T, h, 1);
 //	run_k_2_02(u0, T, h, 0);
 
-	run_k_4_4(u0, T, h, 0, 0);
+//	run_k_4_4(u0, T, h, 0, 0);
 	/*
 	for (int i = 0; i < nbr; i++)
 	{
@@ -41,6 +41,7 @@ int main(void)
 	}
 	*/
 //	Adams(u0, T, h);
+    abs_error(u0, h, T);
 
     system("pause");
 
