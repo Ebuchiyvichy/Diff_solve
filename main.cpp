@@ -17,6 +17,9 @@ int main(void)
 
     test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
     int n = (T-t0)/h; // количество разбиений сетки
+    std::vector<double> u(dim); // эталонное решение
+    u[0] = cos(sqrt(20/0.03) + PI);
+    u[1] = - sqrt(20/0.03) * sin(sqrt(20/0.03) + PI);
 //	eiler_explicit(u0, T, h);
 //	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
 //	sym_scheme(u0, T, h);
@@ -41,7 +44,7 @@ int main(void)
 	}
 	*/
 //	Adams(u0, T, h);
-    abs_error(u0, h, T);
+    abs_error(u,u0, h, T);
 
     system("pause");
 
