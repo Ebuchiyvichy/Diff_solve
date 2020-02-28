@@ -24,7 +24,7 @@ std::vector<double> progn_correct(std::vector<double>  *y_n, std::vector<double>
     y_n1 = y_n;
     return y;
 }
-void	Adams(std::vector<double> u0, double T, double h)
+std::vector<double>	Adams(std::vector<double> u0, double T, double h)
 {
 	std::vector<double> y_n(dim);
 	std::vector<double> y_n1(dim);
@@ -75,4 +75,5 @@ void	Adams(std::vector<double> u0, double T, double h)
 	}*/
 	fout.close();
 	std::cout << "Adams has done." << std::endl;
+	return (u0);
 }

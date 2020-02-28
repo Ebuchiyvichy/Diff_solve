@@ -51,14 +51,19 @@ std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h)
 {
 	std::ofstream fout;
 	fout.open("Explicit_eiler.txt");
+	int		k = 0;
+
 	for (double i = 0; i <= T; i = i + h)
 	{
 		fout << i << '\t';
+		k++;
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
 		u0 = u0 + h * (func(u0));
-		std::cout << "u0 = " << u0[0] << std::endl;
+		if (k == 5)
+			return u0;
+	//	std::cout << "u0 = " << u0[0] << std::endl;
 	/*	if (CHECK_ERR == 1 && i == 5 * h)
 		{
 			double err = abs(u0[0] + check_func(i));
