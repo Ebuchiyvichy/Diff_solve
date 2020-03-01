@@ -47,7 +47,7 @@ double	check_func(double x)
 	return cos(x * sqrt(20 / 0.03));
 }
 
-std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h)
+std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h, int step)
 {
 	std::ofstream fout;
 	fout.open("Explicit_eiler.txt");
@@ -61,14 +61,8 @@ std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h)
 			fout << u0[j] << '\t';
 		fout << std::endl;
 		u0 = u0 + h * (func(u0));
-		if (k == 5)
+		if (k == step)
 			return u0;
-	//	std::cout << "u0 = " << u0[0] << std::endl;
-	/*	if (CHECK_ERR == 1 && i == 5 * h)
-		{
-			double err = abs(u0[0] + check_func(i));
-			std::cout << "Error in Explicit Eiler is " << err << std::endl;
-		}*/
 	}
 	fout.close();
 	std::cout << "Explicit Eiler has done." << std::endl;

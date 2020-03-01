@@ -44,7 +44,8 @@ int main(void)
 			}
 			*/
 			//	Adams(u0, T, h);
-	abs_error(check_func( 5 * h), u0, h, T);
+//	abs_error(check_func( 5 * h), u0, h, T);
+	error_eitken(check_func(5 * h), u0, h, T);
 
 	system("pause");
 
