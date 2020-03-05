@@ -26,6 +26,7 @@ double abs_error(std::vector<double> u, std::vector<double> u0, double h, double
         }
         fout << '\n';
     }
+    /*
     fout << "Eiler implicit \n";
     for (int i = 0; i != 3; i++ )
     {
@@ -39,7 +40,6 @@ double abs_error(std::vector<double> u, std::vector<double> u0, double h, double
         }
         fout << '\n';
     }
-    /*
     fout << "Symmetrical scheme \n";
     for (int i = 0; i != 3; i++ )
     {
