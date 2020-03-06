@@ -9,7 +9,7 @@ int main(void)
 	int TEST; std::cin >> TEST;
 	if (TEST == 0)
 		CHECK_ERR = 1;
-	double T; double h = 0.07;
+	double T; double h = 0.01;
 	std::vector<double> u0(dim);
 	std::vector<double> y(dim);
 	double				R = 0.8;
@@ -18,13 +18,13 @@ int main(void)
 	test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
 	int n = (T - t0) / h; // количество разбиений сетки
 	std::vector<double> u(dim); // эталонное решение
-		//	eiler_explicit(u0, T, h);
+	//	eiler_explicit(u0, T, h);
 	//	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
 	//	sym_scheme(u0, T, h);
-//	run_k_2_2(u0, T, h, 10000);
-		run_k_4_4_change(u0, T, h);
-		run_k_2_2_change(u0, T, h);
-		//	run_k_2_02(u0, T, h, 0);
+	//	run_k_2_2(u0, T, h, 10000);
+	//	run_k_4_4_change(u0, T, h);
+	//	run_k_2_2_change(u0, T, h);
+	//	run_k_2_02(u0, T, h, 0);
 	//	run_k_4_4(u0, T, h, 0, 0);
 /*
 	for (int i = 0; i < nbr; i++)
@@ -41,9 +41,10 @@ int main(void)
 		run_k_4_4(u0, T, h, 0, i);
 	}
 */
-//	Adams(u0, T, h);
-//	abs_error(check_func( 5 * h), u0, h, T);
-//	error_eitken(check_func(5 * h), u0, h, T);
+	//	Adams(u0, T, h, 100000);
+		Adams_progn_correct(u0, T, h, 100000);
+	//	abs_error(check_func( 5 * h), u0, h, T);
+	//	error_eitken(check_func(5 * h), u0, h, T);
 
 	system("pause");
 
