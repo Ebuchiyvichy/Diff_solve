@@ -12,7 +12,7 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		u0[0][0] = 1.;
 		u0[0][1] = 0.;
 		func = &spring;
-		*T = 1;
+		*T = 6;
 		break;
 
 	case 1:
@@ -36,15 +36,15 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		func = &test3;
 		*T = 35;
 		break;
-	case 4: break;
+	case 4: 
+		u0[0][0] = 0.1;
+		u0[0][1] = 0.1;
+		func = &test4;
+		*T = 200;
+		break;
 	default:
 		break;
 	}
-}
-
-double	check_func(double x)
-{
-	return cos(x * sqrt(20 / 0.03));
 }
 
 std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h, int step)
@@ -69,20 +69,24 @@ std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h, i
     return u0;
 }
 
-std::vector<double>	eiler_implicit(std::vector<double> u0, double T, double h)
+std::vector<double>	eiler_implicit(std::vector<double> u0, double T, double h, int step)
 {
 	std::vector<double> yk(u0);
+	int					k = 0;
 
 	std::ofstream fout;
 	fout.open("Implicit_eiler.txt");
 	for (double i = 0; i <= T; i = i + h)
 	{
+		k++;
 		fout << i << '\t';
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
 		Newton(&yk, u0, h);
 		u0 = yk;
+		if (k == step)
+			return u0;
 	}
 	fout.close();
 	std::cout << "Implicit Eiler has done." << std::endl;

@@ -81,11 +81,10 @@ void Newton_sym(std::vector<double> *x, std::vector<double> u0, double h)
 	//	T.QR_find_x(R);
 	//J_.inverse_matrix(R, T);
 		tmp = J.value[0][0] * J.value[1][1] - J.value[0][1] * J.value[1][0];
-		double tmp1 = J_.value[0][0];
 		J_.value[0][0] = J.value[1][1] / tmp;
 		J_.value[0][1] = -J.value[0][1] / tmp;
 		J_.value[1][0] = -J.value[1][0] / tmp;
-		J_.value[1][1] = tmp1 / tmp;
+		J_.value[1][1] = J.value[0][0] / tmp;
 		*x = xk - f_new_sym(xk, u0, h) * J_;
 
 		//		std::cout << "xk = " << xk[0] << "; " << xk[1] << std::endl;

@@ -1,4 +1,4 @@
-
+//
 // Created by irina on 27.02.2020.
 //
 
@@ -29,20 +29,23 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 		temp = tmp[0];
 		fout << '\n';
 	}
-	//fout << "Eiler implicit \n";
-	//for (int i = 0; i != 3; i++)
-	//{
-	//	std::vector<double> tmp(eiler_implicit(u0, T, pow(q, i)*h));
-	//	fout << norm(u, tmp) << '\t';
-	//	if (i != 0)
-	//	{
-	//		std::vector<double> tmp1(eiler_implicit(u0, T, pow(q, i - 1)*h));
-	//		fout << norm(u, tmp) / norm(u, tmp1) << '\t';
-	//		fout << log(q) / log(norm(u, tmp) / norm(u, tmp1)) << '\t';
-	//	}
-	//	fout << '\n';
-	//}
+	fout << '\n';
 	/*
+	fout << "Eiler implicit \n";
+	for (int i = 0; i != 4; i++)
+	{
+		fout << pow(q, i) * h << '\t';
+		std::vector<double> tmp(eiler_implicit(u0, T, pow(q, i) * h, 5 * pow(10, i)));
+		fout << fabs(u - tmp[0]) << '\t';
+		if (i != 0)
+		{
+			fout << fabs(u - tmp[0]) / fabs(u - temp) << '\t';
+			fout << log(fabs(u - tmp[0]) / fabs(u - temp)) / log(q) << '\t';
+		}
+		temp = tmp[0];
+		fout << '\n';
+	}
+
 	fout << "Symmetrical scheme \n";
 	for (int i = 0; i != 3; i++ )
 	{
@@ -61,7 +64,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 	for (int i = 0; i != 4; i++)
 	{
 		fout << pow(q, i) * h << '\t';
-		double	tmp = run_k_2_2(u0, T, pow(q, i)*h, 0, 5 * pow(10, i))[0];
+		double	tmp = run_k_2_2(u0, T, pow(q, i)*h, 5 * pow(10, i))[0];
 		fout << fabs(u - tmp) << '\t';
 		if (i != 0)
 		{
@@ -136,7 +139,7 @@ void error_eitken(double u, std::vector<double> u0, double h, double T)
 	for (int i = 0; i != 5; i++)
 	{
 		fout << pow(q, i) * h << '\t';
-		double	tmp = run_k_2_2(u0, T, pow(q, i)*h, 0, 5 * pow(10, i))[0];
+		double	tmp = run_k_2_2(u0, T, pow(q, i)*h, 5 * pow(10, i))[0];
 		if (i != 0)
 		{
 			if (i != 1)
@@ -172,4 +175,3 @@ void error_eitken(double u, std::vector<double> u0, double h, double T)
 	fout << '\n';
 	fout.close();
 }
-
