@@ -9,7 +9,7 @@ int main(void)
 	int TEST; std::cin >> TEST;
 	if (TEST == 0)
 		CHECK_ERR = 1;
-	double T; double h = 0.01;
+	double T; double h = 0.03;
 	std::vector<double> u0(dim);
 	std::vector<double> y(dim);
 	double				R = 0.8;
@@ -42,9 +42,9 @@ int main(void)
 	}
 */
 	//	Adams(u0, T, h, 100000);
-		Adams_progn_correct(u0, T, h, 100000);
-	//	abs_error(check_func( 5 * h), u0, h, T);
-	//	error_eitken(check_func(5 * h), u0, h, T);
+	//	Adams_progn_correct(u0, T, h, 100000);
+	//	abs_error(check_func(5 * h), u0, h, T);
+		error_eitken(u0, h, T);
 
 	system("pause");
 

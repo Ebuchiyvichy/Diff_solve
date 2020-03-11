@@ -12,7 +12,7 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		u0[0][0] = 1.;
 		u0[0][1] = 0.;
 		func = &spring;
-		*T = 5;
+		*T = 3;
 		break;
 
 	case 1:

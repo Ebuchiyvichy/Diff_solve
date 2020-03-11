@@ -15,7 +15,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 
 	fout.open("Error_file_ext.txt");
 	double q = 0.1;
-	fout << "Eiler explicit \n";
+/*	fout << "Eiler explicit \n";
 	for (int i = 0; i != 4; i++)
 	{
 		fout << pow(q, i) * h << '\t';
@@ -30,7 +30,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 		fout << '\n';
 	}
 	fout << '\n';
-	/*
+
 	fout << "Eiler implicit \n";
 	for (int i = 0; i != 4; i++)
 	{
@@ -57,7 +57,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 			fout << log(q)/log(norm(u, tmp)/norm(u, sym_scheme(u0, T, pow(q,i-1)*h))) << '\t';
 		}
 		fout << '\n';
-	}*/
+	}
 	fout << '\n';
 
 	fout << " Runge-Kutta 2 order\n";
@@ -90,7 +90,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 		temp = tmp;
 		fout << '\n';
 	}
-	fout << '\n';
+	fout << '\n';*/
 
 	fout << "Adams\n";
 	for (int i = 0; i != 4; i++)
@@ -127,7 +127,7 @@ double abs_error(double u, std::vector<double> u0, double h, double T)
 	return(0);
 }
 
-void error_eitken(double u, std::vector<double> u0, double h, double T)
+void error_eitken(std::vector<double> u0, double h, double T)
 {
 	std::ofstream fout;
 	double	temp1;
@@ -135,7 +135,7 @@ void error_eitken(double u, std::vector<double> u0, double h, double T)
 
 	fout.open("Eitken_file_ext.txt");
 	double q = 0.1;
-	fout << " Runge-Kutta 2 order\n";
+	/*fout << " Runge-Kutta 2 order\n";
 	for (int i = 0; i != 5; i++)
 	{
 		fout << pow(q, i) * h << '\t';
@@ -160,6 +160,45 @@ void error_eitken(double u, std::vector<double> u0, double h, double T)
 	{
 		fout << pow(q, i) * h << '\t';
 		double	tmp = run_k_4_4(u0, T, pow(q, i)*h, 0, 0, 5 * pow(10, i))[0];
+		if (i != 0)
+		{
+			if (i != 1)
+			{
+				fout << fabs(tmp - temp1) / fabs(temp2 - temp1) << '\t';
+				fout << log(fabs(tmp - temp1) / fabs(temp2 - temp1)) / log(q) << '\t';
+			}
+			temp2 = temp1;
+		}
+		temp1 = tmp;
+		fout << '\n';
+	}
+	fout << '\n';*/
+
+	fout << " Adams\n";
+	for (int i = 0; i != 5; i++)
+	{
+		fout << pow(q, i) * h << '\t';
+		double	tmp = Adams(u0, T, pow(q, i)*h, 5 * pow(10, i))[0];
+		if (i != 0)
+		{
+			if (i != 1)
+			{
+				fout << fabs(tmp - temp1) / fabs(temp2 - temp1) << '\t';
+				fout << log(fabs(tmp - temp1) / fabs(temp2 - temp1)) / log(q) << '\t';
+			}
+			temp2 = temp1;
+		}
+		temp1 = tmp;
+		fout << '\n';
+	}
+	fout << '\n';
+
+
+	fout << " Predixt-Correct\n";
+	for (int i = 0; i != 5; i++)
+	{
+		fout << pow(q, i) * h << '\t';
+		double	tmp = Adams_progn_correct(u0, T, pow(q, i)*h, 5 * pow(10, i))[0];
 		if (i != 0)
 		{
 			if (i != 1)

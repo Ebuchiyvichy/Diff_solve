@@ -29,7 +29,7 @@ double	check_func(double x)
 
 double	check_func_dif(double x)
 {
-	return -sin(x * sqrt(20 / 0.03)) * sqrt(20 / 0.03);
+	return -sin(x * sqrt(20 / 0.3)) * sqrt(20 / 0.3);
 }
 
 static std::vector<double> spring(std::vector<double> x)
