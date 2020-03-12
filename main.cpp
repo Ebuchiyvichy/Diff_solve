@@ -15,7 +15,6 @@ int main(void)
 
 	test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
 	int n = (T - t0) / h; // количество разбиений сетки
-	std::vector<double> u(dim); // эталонное решение
 	//	eiler_explicit(u0, T, h);
 	//	eiler_implicit(u0, T, h, 10000);//работает в лучшем случае при 0,003 шаге
 	//	sym_scheme(u0, T, h);
@@ -44,7 +43,9 @@ int main(void)
 	//	abs_error(check_func(5 * h), u0, h, T, 5);
 	//	error_eitken(u0, h, T, 5);
 	//	abs_error(check_func(T), u0, h, T, 10000);//последняя точка
-		error_eitken(u0, h, T, 10000);
+	//	error_eitken(u0, h, T, 10000);
+	//энергия
+		energy(u0, T, h, 10000);
 
 
 	system("pause");

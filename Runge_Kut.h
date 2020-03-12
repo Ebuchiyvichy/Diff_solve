@@ -225,3 +225,34 @@ std::vector<double> run_k_4_4_change(std::vector<double> u0, double T, double h)
 	std::cout << "Runge-Kutte runk 4 order 4 with change has done." << std::endl;
 	return u0;
 }
+
+std::vector<double> energy(std::vector<double> u0, double T, double h, int step)
+{
+	std::vector<double> k_n1(dim);
+	std::vector<double> k_n2(dim);
+	std::ofstream fout;
+	double				facmax = 2.0;
+	double				facmin = 0.2;
+	double				fac = 0.89;
+	int					k = 0;
+	double				energy;
+
+	fout.open("Energy.txt");
+	for (double i = 0; i <= T; i += h)
+	{
+		k++;
+		std::vector<double> tmp(u0);
+
+		fout << i << '\t';
+		energy = 0.03 * u0[1] * u0[1] / 2 + 20 * u0[0] * u0[0] / 2;
+			fout << energy << '\n';
+		k_n1 = func(u0);
+		k_n2 = func(u0 + h * k_n1);
+		u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
+		if (k == step)
+			return u0;
+	}
+	fout.close();
+	std::cout << "Energy has done." << std::endl;
+	return u0;
+}
