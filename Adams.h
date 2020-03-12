@@ -15,6 +15,7 @@ void	run_k_4_4_for_one(std::vector<double> *u0, double T, double h)
 		*u0 = *u0 + h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
 }
 
+
 std::vector<double> progn_correct(std::vector<double>  *y_n, std::vector<double> *y_n1, std::vector<double> *y_n2, std::vector<double> *y_n3, double h)
 {
     std::vector<double> y(dim);
@@ -89,6 +90,7 @@ std::vector<double>	Adams_progn_correct(std::vector<double> u0, double T, double
 	std::cout << "Predict-correction has done." << std::endl;
 	return (y_n);
 }
+
 
 std::vector<double> Ad(std::vector<double>  *y_n, std::vector<double> *y_n1, std::vector<double> *y_n2, std::vector<double> *y_n3, double h)
 {

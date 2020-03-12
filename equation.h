@@ -12,7 +12,7 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		u0[0][0] = 1.;
 		u0[0][1] = 0.;
 		func = &spring;
-		*T = 3;
+		*T = 1;
 		break;
 
 	case 1:
@@ -83,7 +83,7 @@ std::vector<double>	eiler_implicit(std::vector<double> u0, double T, double h, i
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
-		Newton(&yk, u0, h);
+		yk = Newton(yk, u0, h);
 		u0 = yk;
 		if (k == step)
 			return u0;
@@ -93,20 +93,24 @@ std::vector<double>	eiler_implicit(std::vector<double> u0, double T, double h, i
     return u0;
 }
 
-std::vector<double>	sym_scheme(std::vector<double> u0, double T, double h)
+std::vector<double>	sym_scheme(std::vector<double> u0, double T, double h, int step)
 {
 	std::vector<double> yk(u0);
+	std::ofstream		fout;
+	int					k = 0;
 
-	std::ofstream fout;
 	fout.open("Sym_scheme.txt");
 	for (double i = 0; i <= T; i = i + h)
 	{
+		k++;
 		fout << i << '\t';
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
 		Newton_sym(&yk, u0, h);
 		u0 = yk;
+		if (k == step)
+			return (u0);
 	}
 	fout.close();
 	std::cout << "Symmetrical scheme has done." << std::endl;

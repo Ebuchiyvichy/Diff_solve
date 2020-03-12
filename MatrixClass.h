@@ -14,7 +14,7 @@
 #include <fstream>
 #include <functional>
 #include <string>
-double			EPS = 10.e-3;
+double			EPS = 10.e-4;
 int	const		dim = 2;
 double const    t0 = 0;
 bool			CHECK_ERR = 0;

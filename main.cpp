@@ -7,8 +7,6 @@ int main(void)
 {
 	std::cout << "Please, enter the number of test: ";
 	int TEST; std::cin >> TEST;
-	if (TEST == 0)
-		CHECK_ERR = 1;
 	double T; double h = 0.03;
 	std::vector<double> u0(dim);
 	std::vector<double> y(dim);
@@ -19,7 +17,7 @@ int main(void)
 	int n = (T - t0) / h; // количество разбиений сетки
 	std::vector<double> u(dim); // эталонное решение
 	//	eiler_explicit(u0, T, h);
-	//	eiler_implicit(u0, T, h);//работает в лучшем случае при 0,003 шаге
+	//	eiler_implicit(u0, T, h, 10000);//работает в лучшем случае при 0,003 шаге
 	//	sym_scheme(u0, T, h);
 	//	run_k_2_2(u0, T, h, 10000);
 	//	run_k_4_4_change(u0, T, h);
@@ -43,8 +41,11 @@ int main(void)
 */
 	//	Adams(u0, T, h, 100000);
 	//	Adams_progn_correct(u0, T, h, 100000);
-	//	abs_error(check_func(5 * h), u0, h, T);
-		error_eitken(u0, h, T);
+	//	abs_error(check_func(5 * h), u0, h, T, 5);
+	//	error_eitken(u0, h, T, 5);
+	//	abs_error(check_func(T), u0, h, T, 10000);//последняя точка
+		error_eitken(u0, h, T, 10000);
+
 
 	system("pause");
 
