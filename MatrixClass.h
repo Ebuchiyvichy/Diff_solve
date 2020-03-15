@@ -14,7 +14,7 @@
 #include <fstream>
 #include <functional>
 #include <string>
-double			EPS = 10.e-6;
+double			EPS = 10.e-4;
 int	const		dim = 2;
 double const    t0 = 0;
 bool			CHECK_ERR = 0;
@@ -298,4 +298,12 @@ std::vector<double> operator / (std::vector<double> a, double b)
 	for (int i = 0; i != c.size(); i++)
 		c[i] = a[i] / b;
 	return c;
+}
+
+double norm(std::vector<double> x)
+{
+    double sum = 0;
+    for(int i = 0; i != x.size(); i++)
+        sum += (x[i]*x[i]);
+    return sqrt(sum);
 }

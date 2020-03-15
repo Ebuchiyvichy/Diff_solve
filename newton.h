@@ -4,63 +4,46 @@
 #endif //DIFF_SOLVE_NEWTON_H
 #include "Adams.h"
 
-double	D (std::vector<double> x, int n, int m)
+double	D(std::vector<double> x, int n, int m, std::vector<double> u0, double h, int flag)
 {
     std::vector<double>	tmp(x);
 
     tmp[m] = x[m] + EPS;
-    return (func(tmp)[n] - func(x)[n]) / EPS;
+	if (flag == 0)
+		return (f_new(tmp, u0, h)[n] - f_new(x, u0, h)[n]) / EPS;
+	else
+		return (f_new_sym(tmp, u0, h)[n] - f_new_sym(x, u0, h)[n]) / EPS;
 }
 
-double	D_cen(std::vector<double> x, int n, int m)
-{
-    std::vector<double>	tmp1(x);
-    std::vector<double>	tmp2(x);
-
-    tmp1[m] = x[m] + EPS;
-    tmp2[m] = x[m] - EPS;
-    return (func(tmp1)[n] - func(tmp2)[n]) / (2 * EPS);
-}
-
-Matrix	Jacoby_matr(std::vector<double> x)
+Matrix	Jacoby_matr(std::vector<double> x, std::vector<double> u0, double h, int flag)
 {
     Matrix Jac(dim);
 
     for (int i = 0; i < dim; i++)
         for (int j = 0; j < dim; j++)
-            Jac.value[i][j] = D( x, i, j);
+            Jac.value[i][j] = D(x, i, j, u0, h, flag);
     return Jac;
 }
 
-void Newton(std::vector<double> *x, std::vector<double> u0, double h)
+std::vector<double> Newton(std::vector<double> x, std::vector<double> u0, double h)
 {
-    std::vector<double>	xk(*x);
+    std::vector<double>	xk(x);
     Matrix	J_(dim);
     Matrix  J(dim);
     Matrix	R(dim);
     Matrix	T(dim);
-	double	tmp;
 
     do
     {
-        xk = *x;
-        J = Jacoby_matr(xk);
+        xk = x;
+        J = Jacoby_matr(xk, u0, h, 0);
         R = J;
         T.onebyone();
         T.QR_find_x(R);
         J_.inverse_matrix(R, T);
-        *x = xk - f_new(xk, u0, h) * J_;
-		//tmp = J.value[0][0] * J.value[1][1] - J.value[0][1] * J.value[1][0];
-		//J_.value[0][0] = J.value[1][1] / tmp;
-		//J_.value[0][1] = -J.value[0][1] / tmp;
-		//J_.value[1][0] = -J.value[1][0] / tmp;
-		//J_.value[1][1] = J.value[0][0] / tmp;
-		*x = xk - f_new_sym(xk, u0, h) * J_;
-
-//		std::cout << "xk = " << xk[0] << "; " << xk[1] << std::endl;
-//		std::cout << "f_new = " << (f_new(xk, u0, h))[0] << "; " << (f_new(xk, u0, h))[1] << std::endl;
-//		std::cout << "x = " << (*x)[0] << "; " << (*x)[1] << std::endl;	
-	} while (norm(xk, *x) > EPS);
+		x = xk - J_ * f_new(xk, u0, h);
+	} while (norm(xk, x) > EPS);
+	return (x);
 }
 
 void Newton_sym(std::vector<double> *x, std::vector<double> u0, double h)
@@ -70,26 +53,15 @@ void Newton_sym(std::vector<double> *x, std::vector<double> u0, double h)
 	Matrix  J(dim);
 	Matrix	R(dim);
 	Matrix	T(dim);
-	double	tmp;
 
 	do
 	{
 		xk = *x;
-		J = Jacoby_matr(xk);
-	//	R = J;
-	//	T.onebyone();
-	//	T.QR_find_x(R);
-	//J_.inverse_matrix(R, T);
-		tmp = J.value[0][0] * J.value[1][1] - J.value[0][1] * J.value[1][0];
-		double tmp1 = J_.value[0][0];
-		J_.value[0][0] = J.value[1][1] / tmp;
-		J_.value[0][1] = -J.value[0][1] / tmp;
-		J_.value[1][0] = -J.value[1][0] / tmp;
-		J_.value[1][1] = tmp1 / tmp;
-		*x = xk - f_new_sym(xk, u0, h) * J_;
-
-		//		std::cout << "xk = " << xk[0] << "; " << xk[1] << std::endl;
-		//		std::cout << "f_new = " << (f_new(xk, u0, h))[0] << "; " << (f_new(xk, u0, h))[1] << std::endl;
-		//		std::cout << "x = " << (*x)[0] << "; " << (*x)[1] << std::endl;	
+		J = Jacoby_matr(xk, u0, h, 1);
+			R = J;
+			T.onebyone();
+			T.QR_find_x(R);
+		J_.inverse_matrix(R, T);
+		*x = xk - J_ * f_new_sym(xk, u0, h);
 	} while (norm(xk, *x) > EPS);
 }
