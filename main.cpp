@@ -20,7 +20,7 @@ int main(void)
 	//	sym_scheme(u0, T, h);
 	//	run_k_2_2(u0, T, h, 10000);
 	//	run_k_4_4_change(u0, T, h);
-		run_k_2_2_change(u0, T, h);
+
 	//	run_k_2_02(u0, T, h, 0);
 	//	run_k_4_4(u0, T, h, 0, 0);
 /*

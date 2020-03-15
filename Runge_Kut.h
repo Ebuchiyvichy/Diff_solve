@@ -103,23 +103,6 @@ void run_k_2_02(std::vector<double> u0, double T, double h, int flag)
 	fout.close();
 	std::cout << "Runge-Kutte runk 2 order 2 another ones has done." << std::endl;
 }
-std::vector<double> run_vec(std::vector<double> tmp, double h, int p)
-{
-    std::vector<double> k_n1(dim), k_n2(dim);
-    for (int i = 0; i != 2; i++)
-    {
-        k_n1 = func(tmp);
-        k_n2 = func(tmp + h * k_n1);
-        if (p == 4)
-        {
-            std::vector<double> k_n3(func(tmp + h / 2 * k_n2));
-            std::vector<double> k_n4(func(tmp + h * k_n3));
-            tmp = tmp + h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
-        }
-        else tmp = tmp + h * (0.5 * k_n1 + 0.5 * k_n2);
-    }
-    return tmp;
-}
 
 int run_run_change(std::vector<double> u0, std::vector<double> tmp, double h, int p, double *norma) //u0 - íà÷àëüíîå çíà÷åíèå; tmp - çíà÷åíèå â yn, p - ïîðÿäîê
 {
@@ -142,7 +125,7 @@ int run_run_change(std::vector<double> u0, std::vector<double> tmp, double h, in
     if (norm((u0-tmp) / (pow(2, p) - 1)) <= EPS)
         return 0;		//øàã ïîäõîäèò
     return 1;		//øàã íå ïîäõîäèò
-}
+
 
 std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
 {
@@ -245,31 +228,26 @@ std::vector<double> run_k_4_4_change(std::vector<double> u0, double T, double h)
 
 std::vector<double> energy(std::vector<double> u0, double T, double h, int step)
 {
-	std::vector<double> k_n1(dim);
-	std::vector<double> k_n2(dim);
-	std::ofstream fout;
-	double				facmax = 2.0;
-	double				facmin = 0.2;
-	double				fac = 0.89;
-	int					k = 0;
-	double				energy;
-
-	fout.open("Energy.txt");
-	for (double i = 0; i <= T; i += h)
-	{
-		k++;
-		std::vector<double> tmp(u0);
-
-		fout << i << '\t';
-		energy = 0.03 * u0[1] * u0[1] / 2 + 20 * u0[0] * u0[0] / 2;
-			fout << energy << '\n';
-		k_n1 = func(u0);
-		k_n2 = func(u0 + h * k_n1);
-		u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
-		if (k == step)
-			return u0;
-	}
-	fout.close();
-	std::cout << "Energy has done." << std::endl;
-	return u0;
+     std::vector<double> k_n1(dim);
+     std::vector<double> k_n2(dim);
+     std::ofstream fout;
+     int					k = 0;
+     double				energy;
+     fout.open("Energy.txt");
+     for (double i = 0; i <= T; i += h)
+     {
+         k++;
+         std::vector<double> tmp(u0);
+         fout << i << '\t';
+         energy = 0.03 * u0[1] * u0[1] / 2 + 20 * u0[0] * u0[0] / 2;
+         fout << energy << '\n';
+         k_n1 = func(u0);
+         k_n2 = func(u0 + h * k_n1);
+         u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
+         if (k == step)
+             return u0;
+     }
+     out.close();
+     std::cout << "Energy has done." << std::endl;
+     return u0;
 }
