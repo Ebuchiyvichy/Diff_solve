@@ -37,8 +37,8 @@ std::vector<double> run_k_2_2(std::vector<double> u0, double T, double h, int st
 		fout << i << '\t';
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
-		k_n1 = func(u0);
-		k_n2 = func(u0 + h * k_n1);
+		k_n1 = func(u0, i);
+		k_n2 = func(u0 + h * k_n1, i);
 		u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
 		if (k == step)
 			return u0;
@@ -70,10 +70,10 @@ std::vector<double> run_k_4_4(std::vector<double> u0, double T, double h, char n
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
-		k_n1 = func(u0);
-		k_n2 = func(u0 + h / 2 * k_n1);
-		k_n3 = func(u0 + h / 2 * k_n2);
-		k_n4 = func(u0 + h * k_n3);
+		k_n1 = func(u0, i);
+		k_n2 = func(u0 + h / 2 * k_n1, i);
+		k_n3 = func(u0 + h / 2 * k_n2, i);
+		k_n4 = func(u0 + h * k_n3, i);
 		u0 = u0 + h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
 		if (k == step)
 			return u0;
@@ -96,8 +96,8 @@ void run_k_2_02(std::vector<double> u0, double T, double h, int flag)
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
-		k_n1 = func(u0);
-		k_n2 = func(u0 + h / 2 * k_n1);
+		k_n1 = func(u0, i);
+		k_n2 = func(u0 + h / 2 * k_n1, i);
 		u0 = u0 + h * k_n2;
 	}
 	fout.close();
@@ -106,26 +106,26 @@ void run_k_2_02(std::vector<double> u0, double T, double h, int flag)
 
 int run_run_change(std::vector<double> u0, std::vector<double> tmp, double h, int p, double *norma) //u0 - íà÷àëüíîå çíà÷åíèå; tmp - çíà÷åíèå â yn, p - ïîðÿäîê
 {
-    std::vector<double> k_n1(dim), k_n2(dim);
-    for (int i = 0; i != 2; i++)
-    {
-        k_n1 = func(u0);
-        k_n2 = func(u0 + h * k_n1);
-        if (p == 4)
-        {
-            std::vector<double> k_n3(func(u0 + h / 2 * k_n2));
-            std::vector<double> k_n4(func(u0 + h * k_n3));
-            u0 = u0 + h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
-        }
-        else u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
-    }
-    *norma = -log(norm((u0-tmp) / (pow(2, p) - 1)));
-    if(norm((u0-tmp) / (pow(2, p) - 1)) <= EPS*0.1)
-        return 2;
-    if (norm((u0-tmp) / (pow(2, p) - 1)) <= EPS)
-        return 0;		//øàã ïîäõîäèò
-    return 1;		//øàã íå ïîäõîäèò
-
+	std::vector<double> k_n1(dim), k_n2(dim);
+	for (int i = 0; i != 2; i++)
+	{
+		k_n1 = func(u0, i);
+		k_n2 = func(u0 + h * k_n1, i);
+		if (p == 4)
+		{
+			std::vector<double> k_n3(func(u0 + h / 2 * k_n2, i));
+			std::vector<double> k_n4(func(u0 + h * k_n3, i));
+			u0 = u0 + h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
+		}
+		else u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
+	}
+	*norma = -log(norm((u0 - tmp) / (pow(2, p) - 1)));
+	if (norm((u0 - tmp) / (pow(2, p) - 1)) <= EPS * 0.1)
+		return 2;
+	if (norm((u0 - tmp) / (pow(2, p) - 1)) <= EPS)
+		return 0;		//øàã ïîäõîäèò
+	return 1;		//øàã íå ïîäõîäèò
+}
 
 std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
 {
@@ -137,7 +137,7 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
     double				fac = 0.89;
     int					k = 0;
 
-    fout.open("/home/irina/Documents/MetVich/Diff_solve/Runge_Kut_2_2_change.txt");
+    fout.open("Runge_Kut_2_2_change.txt");
     for (double i = 0; i <= T; i += h)
     {
         k++;
@@ -148,13 +148,14 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
         u[0] = check_func(i);
         u[1] = check_func_dif(i);
 
-        k_n1 = func(u0);
-        k_n2 = func(u0 + 2 * h * k_n1);
+        k_n1 = func(u0, i);
+        k_n2 = func(u0 + 2 * h * k_n1, i);
         u0 = u0 + 2 * h * (0.5 * k_n1 + 0.5 * k_n2);
         if (run_run_change(tmp, u0, h, 2, &norma) == 1)
         {
             h *= min(facmax, max(facmin, fac * pow(EPS / norma, 1./3)));
             u0 = tmp;
+			std::cout << "imhere\n";
             continue;
         }
         else if (run_run_change(tmp, u0, h, 2, &norma) == 2) {
@@ -163,6 +164,7 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
             continue;
         }
         fout << i << '\t';
+		std::cout << "andhere\n";
         for (int j = 0; j < dim; j++)
             fout << tmp[j] << '\t';
         fout << norm(tmp - u) << '\t';
@@ -197,10 +199,10 @@ std::vector<double> run_k_4_4_change(std::vector<double> u0, double T, double h)
 
 		u[0] = check_func(i);
 		u[1] = check_func_dif(i);
-		k_n1 = func(u0);
-		k_n2 = func(u0 + 2 * h * k_n1);
-		k_n3 = func(u0 + 2 * h / 2 * k_n2);
-		k_n4 = func(u0 + 2 * h * k_n3);
+		k_n1 = func(u0, i);
+		k_n2 = func(u0 + 2 * h * k_n1, i);
+		k_n3 = func(u0 + 2 * h / 2 * k_n2, i);
+		k_n4 = func(u0 + 2 * h * k_n3, i);
 		u0 = u0 + 2 * h * (1.0 / 6.0) * (k_n1 + 2 * k_n2 + 2 * k_n3 + k_n4);
         if (run_run_change(tmp, u0, h, 4, &norma) == 1)
         {
@@ -241,13 +243,13 @@ std::vector<double> energy(std::vector<double> u0, double T, double h, int step)
          fout << i << '\t';
          energy = 0.03 * u0[1] * u0[1] / 2 + 20 * u0[0] * u0[0] / 2;
          fout << energy << '\n';
-         k_n1 = func(u0);
-         k_n2 = func(u0 + h * k_n1);
+         k_n1 = func(u0, i);
+         k_n2 = func(u0 + h * k_n1, i);
          u0 = u0 + h * (0.5 * k_n1 + 0.5 * k_n2);
          if (k == step)
              return u0;
      }
-     out.close();
+     fout.close();
      std::cout << "Energy has done." << std::endl;
      return u0;
 }

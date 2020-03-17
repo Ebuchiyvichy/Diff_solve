@@ -10,7 +10,7 @@ int main(void)
 	double T; double h = 0.03;
 	std::vector<double> u0(dim);
 	std::vector<double> y(dim);
-	double				R = 0.8;
+	double				R = 0.3;
 	int					nbr = 15;
 
 	test_init(TEST, &u0, &T);// инициализация начальных краевых условий и временного интервала
@@ -23,21 +23,24 @@ int main(void)
 
 	//	run_k_2_02(u0, T, h, 0);
 	//	run_k_4_4(u0, T, h, 0, 0);
-/*
+	/*
 	for (int i = 0; i < nbr; i++)
 	{
-		u0[0] = 0.1 + R * cos(2 * PI * i / nbr);
-		u0[1] = 0.1 - R * sin(2 * PI * i / nbr);
-		run_k_4_4(u0, T, h, 0, i, 100000);
-	}
+		u0[0] = 0.4 + R * cos(2 * PI * i / nbr);
+		u0[1] = 3.75 - R * sin(2 * PI * i / nbr);
+		run_k_4_4(u0, T, h, i, 100000);
+	}*/
 
 	for (int i = 0; i < nbr; i++)
 	{
-		u0[0] = 0;
-		u0[1] = 1 - i * 0.01;
-		run_k_4_4(u0, T, h, 0, i);
+		if (i < nbr / 2)
+			u0[0] = 0;
+		else
+			u0[0] = 3;
+		u0[1] = 8 - i * 1;
+		run_k_4_4(u0, T, h, i, 1000000);
 	}
-*/
+
 	//	Adams(u0, T, h, 100000);
 	//	Adams_progn_correct(u0, T, h, 100000);
 	//	abs_error(check_func(5 * h), u0, h, T, 5);
@@ -45,7 +48,7 @@ int main(void)
 	//	abs_error(check_func(T), u0, h, T, 10000);//последняя точка
 	//	error_eitken(u0, h, T, 10000);
 	//энергия
-		energy(u0, T, h, 10000);
+	//	energy(u0, T, h, 10000);
 
 
 	system("pause");

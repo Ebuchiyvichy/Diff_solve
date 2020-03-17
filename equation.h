@@ -42,6 +42,18 @@ void	test_init(int TEST, std::vector<double>* u0, double *T)
 		func = &test4;
 		*T = 200;
 		break;
+	case 42:
+		u0[0][0] = 0.1;
+		u0[0][1] = 0.1;
+		func = &test42;
+		*T = 50;
+		break;
+	case 46:
+		u0[0][0] = 1.0;
+		u0[0][1] = 2.0;
+		func = &test46;
+		*T = 50;
+		break;
 	default:
 		break;
 	}
@@ -60,7 +72,7 @@ std::vector<double>	eiler_explicit(std::vector<double> u0, double T, double h, i
 		for (int j = 0; j < dim; j++)
 			fout << u0[j] << '\t';
 		fout << std::endl;
-		u0 = u0 + h * (func(u0));
+		u0 = u0 + h * (func(u0, i));
 		if (k == step)
 			return u0;
 	}
