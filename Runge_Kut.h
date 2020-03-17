@@ -22,10 +22,7 @@ std::vector<double> run_k_2_2(std::vector<double> u0, double T, double h, int st
 {
 	std::vector<double> k_n1(dim);
 	std::vector<double> k_n2(dim);
-	std::ofstream fout;
-	double				facmax = 2.0;
-	double				facmin = 0.2;
-	double				fac = 0.89;
+	std::ofstream		fout;
 	int					k = 0;
 
 	fout.open("Runge_Kut_2_2.txt");
@@ -155,7 +152,6 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
         {
             h *= min(facmax, max(facmin, fac * pow(EPS / norma, 1./3)));
             u0 = tmp;
-			std::cout << "imhere\n";
             continue;
         }
         else if (run_run_change(tmp, u0, h, 2, &norma) == 2) {
@@ -164,7 +160,6 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
             continue;
         }
         fout << i << '\t';
-		std::cout << "andhere\n";
         for (int j = 0; j < dim; j++)
             fout << tmp[j] << '\t';
         fout << norm(tmp - u) << '\t';
