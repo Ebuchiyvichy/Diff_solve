@@ -19,17 +19,17 @@ int main(void)
 	//	eiler_implicit(u0, T, h, 10000);//работает в лучшем случае при 0,003 шаге
 	//	sym_scheme(u0, T, h);
 	//	run_k_2_2(u0, T, h, 10000);
-	//	run_k_4_4_change(u0, T, h);
+		run_k_4_4_change(u0, T, h);
 
 	//	run_k_2_02(u0, T, h, 0);
 	//	run_k_2_2_change(u0, T, h);
-	
+	/*
 	for (int i = 0; i < nbr; i++)
 	{
 		u0[0] = 0.1 + R * cos(2 * PI * i / nbr);
 		u0[1] = 0.1 - R * sin(2 * PI * i / nbr);
 		run_k_4_4(u0, T, h, i, 100000);
-	}
+	}*/
 	/*
 	for (int i = 0; i < nbr; i++)
 	{
