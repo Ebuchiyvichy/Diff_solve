@@ -143,6 +143,9 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
 		std::vector<double> tmp(u0);
 		double				norma;
 
+		u[0] = check_func(i);
+		u[1] = check_func_dif(i);//использует i!
+		
 		k_n1 = func(u0, i);
 		k_n2 = func(u0 + 2 * h * k_n1, i);
 		u0 = u0 + 2 * h * (0.5 * k_n1 + 0.5 * k_n2);
@@ -161,12 +164,10 @@ std::vector<double> run_k_2_2_change(std::vector<double> u0, double T, double h)
 			i -= 2 * h;
 			continue;
 		}
-		u[0] = check_func(i - 2 * h);
-		u[1] = check_func_dif(i - 2 * h);
 		fout << i << '\t';
 		for (int j = 0; j < dim; j++)
 			fout << tmp[j] << '\t';
-		fout << 2 * norm(tmp - u) << '\t';
+		fout << 30 * norm(tmp - u) << '\t';
 		fout << -log(h) << '\t';
 		fout << -log(norma) << '\t';
 		fout << u[0] << '\t' << u[1] << '\t' << std::endl;
